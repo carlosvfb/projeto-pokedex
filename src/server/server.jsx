@@ -62,6 +62,31 @@ export const fetchPokemonDetails = async (name) => {
     }
 };
 
+export const fetchAllPokemonData = async () => {
+    try {
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=648`); // Ajuste o limite conforme necessário
+        const pokemonList = response.data.results;
+        console.log(pokemonList);
+        const detailedDataPromises = pokemonList.map(async (pokemon) => {
+            const pokemonDetails = await axios.get(pokemon.url);
+            const types = pokemonDetails.data.types.map(type => type.type.name);
+
+            return {
+                name: pokemonDetails.data.name,
+                url: pokemonDetails.data.sprites.other.dream_world.front_default,
+                types: types,
+            };
+        });
+
+        const detailedDataResponses = await Promise.all(detailedDataPromises);
+
+        return detailedDataResponses;
+    } catch (error) {
+        console.error('Erro ao buscar dados: ', error);
+        throw error;
+    }
+};
+
 
 // export const fetchPokemonDetails = async (name) => {
 //     try {

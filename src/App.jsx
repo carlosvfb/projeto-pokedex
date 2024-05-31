@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { fetchPokemonData } from "./server/server";
+import { fetchPokemonData, fetchAllPokemonData } from "./server/server";
 import { createGlobalStyle, styled } from 'styled-components'
 import { ThemeContext } from "./theme/theme";
 import { Routes, Route, Link } from 'react-router-dom';
@@ -11,13 +11,14 @@ import typeColors from "./components/typeColors/typeColors"
 function App() {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
   const [data, setData] = useState([]);
+  const [allPokemonData, setAllPokemonData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [pokemonName, setPokemonName] = useState('');
   const limit = 10;
-  
-  
 
   const toggleDarkMode = (checked) => {
     setDarkMode(checked);
@@ -29,9 +30,13 @@ function App() {
         const pokemonData = await fetchPokemonData(offset, limit);
         if (!initialLoadComplete) {
           setData(pokemonData);
+          setFilteredData(pokemonData);
           setInitialLoadComplete(true);
         } else {
-          setData(prevData => [...prevData,...pokemonData]);
+          // setData(prevData => [...prevData,...pokemonData]);
+          const newData = [...data,...pokemonData];
+          setData(newData)
+          setFilteredData(newData);
         }
         setLoading(false);
       } catch (error) {
@@ -43,10 +48,34 @@ function App() {
     fetchData();
   }, [offset]);
 
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const allData = await fetchAllPokemonData();
+        setAllPokemonData(allData);
+      } catch (error) {
+        console.error('Erro ao buscar todos os dados: ', error);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setPokemonName(value);
+    if (value === '') {
+      setFilteredData(data);
+    } else {
+      const filtered = allPokemonData.filter(pokemon => pokemon.name.toLowerCase().includes(value.toLowerCase()));
+      setFilteredData(filtered);
+    }
+
+  };
+
   if (loading && !initialLoadComplete) {
     return <div>Carregando...</div>;
   }
-
 
   if (error) {
     return <div>Erro ao buscar dados: {error.message}</div>;
@@ -61,6 +90,13 @@ function App() {
       <GlobalStyle />
       <Header >
       <Link to="/"><ImageLogo src={logoPokemon} alt="logo" /></Link>
+      <input
+        type="text"
+        value={pokemonName}
+        onChange={handleInputChange}
+        placeholder="Digite o nome do Pokémon"
+      />
+      {/* <button onClick={handleSearch}>Pesquisar</button> */}
         <DarkModeSwitch
           checked={isDarkMode}
           onChange={toggleDarkMode}
@@ -90,7 +126,7 @@ function App() {
           <Route path="/" element={
             <>
               <PokemonList>
-                {data.map((item, index) => (
+                {filteredData.map((item, index) => (
                   <PokemonItem key={`${item.name}-${index}`} types={item.types}>
                     <StyledLink to={`/pokemon/${item.name}`}>
                       <ImagePokemon src={item.url} alt={item.name.charAt(0).toUpperCase() + item.name.slice(1).toLowerCase()} />
@@ -104,7 +140,7 @@ function App() {
                   </PokemonItem>
                 ))}
               </PokemonList>
-              {data.length < 200 && (
+              {pokemonName === '' && data.length < 400 && (
                 <LoadMoreButton onClick={loadMorePokemon}>Carregar Mais Pokémons</LoadMoreButton>
               )}
             </>
@@ -153,7 +189,6 @@ const GlobalStyle = createGlobalStyle`
     z-index: -1;
   }
 `
-
 const Header = styled.header`
   display: flex;
   align-items: center;
@@ -161,7 +196,6 @@ const Header = styled.header`
   padding: 10px 30px;
   z-index: 2;
 `
-
 const ImageLogo = styled.img`
   width: 250px;
   height: 150px;
@@ -172,7 +206,6 @@ const PokemonList = styled.ul`
   justify-content: center;
   padding: 20px;
 `
-
 const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
@@ -208,7 +241,6 @@ const ImagePokemon = styled.div`
   background-repeat: no-repeat;
   margin: 10px;
   
-
   &:hover {
     transform: scale(1.05);
   }
@@ -236,23 +268,23 @@ const LoadMoreButton = styled.button`
     color: ${({ theme }) => theme.toggleBorder};
     transform: scale(1.05);
   }
-  `
+`
 
-  const Container = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   `
 
-  const TypeList = styled.div`
+const TypeList = styled.div`
     display: flex;
     justify-content: center;
     gap: 20px;
     background-color: ${({ theme }) => theme.opacityType};
     border-radius: 10px;
     padding: 20px;
-    `
+`
 
   const TypePokemon = styled.div`
     background-color: ${({ type }) => typeColors[type] || '#777'};
