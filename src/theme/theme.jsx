@@ -28,7 +28,7 @@ const darkTheme = {
   background: '#999',
   colorType: '#a6aec1',
   colorMovements: 'rgba(255, 255, 255, 0.5)',
-  urlImage: 'url(../../public/teste.jpg)',
+  urlImage: 'url(../../teste.jpg)',
   opacityTransparent: 'rgba(0, 0, 0, 0.7)',
   backgroundMoviments: 'rgba(255, 255, 255, 0.5)',
   colorBack: '#FFF',

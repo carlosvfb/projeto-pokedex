@@ -5,7 +5,7 @@ import { createGlobalStyle, styled } from 'styled-components'
 import { ThemeContext } from "./theme/theme";
 import { Routes, Route, Link } from 'react-router-dom';
 import PokemonDetail from "./routes/pokemonDetails";
-import logoPokemon from "../public/logo-pokemon.png";
+import logoPokemon from "/logo-pokemon.png";
 import typeColors from "./components/typeColors/typeColors"
 
 function App() {
