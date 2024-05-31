@@ -6,7 +6,8 @@ import { ThemeContext } from "./theme/theme";
 import { Routes, Route, Link } from 'react-router-dom';
 import PokemonDetail from "./routes/pokemonDetails";
 import logoPokemon from "/logo-pokemon.png";
-import typeColors from "./components/typeColors/typeColors"
+import typeColors from "./components/typeColors/typeColors";
+import { FiSearch } from 'react-icons/fi'
 
 function App() {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
@@ -18,6 +19,7 @@ function App() {
   const [offset, setOffset] = useState(0);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [pokemonName, setPokemonName] = useState('');
+  const [searchError, setSearchError] = useState('');
   const limit = 10;
 
   const toggleDarkMode = (checked) => {
@@ -66,12 +68,36 @@ function App() {
     setPokemonName(value);
     if (value === '') {
       setFilteredData(data);
+      setSearchError('');
     } else {
       const filtered = allPokemonData.filter(pokemon => pokemon.name.toLowerCase().includes(value.toLowerCase()));
+      if(filtered.length === 0) {
+        setSearchError('Pokémon não encontrado');
+      } else {
+        setSearchError('');
+        setFilteredData(filtered);
+      }
       setFilteredData(filtered);
     }
 
   };
+
+  const handleSearch = () => {
+    if (pokemonName === '') {
+      setFilteredData(data);
+      setSearchError('');
+      alert("Digite um nome!")
+    } else {
+      const filtered = allPokemonData.filter(pokemon => pokemon.name.toLowerCase().includes(pokemonName.toLowerCase()));
+      if(filtered.length === 0) {
+        setSearchError('Pokémon não encontrado');
+      } else {
+        setSearchError('');
+        setFilteredData(filtered);
+      }
+      setFilteredData(filtered);
+    }
+  }
 
   if (loading && !initialLoadComplete) {
     return <div>Carregando...</div>;
@@ -89,14 +115,16 @@ function App() {
     <div>
       <GlobalStyle />
       <Header >
-      <Link to="/"><ImageLogo src={logoPokemon} alt="logo" /></Link>
-      <input
-        type="text"
-        value={pokemonName}
-        onChange={handleInputChange}
-        placeholder="Digite o nome do Pokémon"
-      />
-      {/* <button onClick={handleSearch}>Pesquisar</button> */}
+        <Link to="/"><ImageLogo src={logoPokemon} alt="logo" /></Link>
+        <Search>
+          <InputSearch
+          type="text"
+          value={pokemonName}
+          onChange={handleInputChange}
+          placeholder="Digite o nome do Pokémon"
+          />
+          <ButtonSearch onClick={handleSearch}><FiSearch size={25} /></ButtonSearch>
+        </Search>
         <DarkModeSwitch
           checked={isDarkMode}
           onChange={toggleDarkMode}
@@ -125,6 +153,7 @@ function App() {
       <Routes>
           <Route path="/" element={
             <>
+              {searchError && <ErrorMessage>{searchError}</ErrorMessage>}
               <PokemonList>
                 {filteredData.map((item, index) => (
                   <PokemonItem key={`${item.name}-${index}`} types={item.types}>
@@ -189,6 +218,50 @@ const GlobalStyle = createGlobalStyle`
     z-index: -1;
   }
 `
+
+const ButtonSearch = styled.button`
+  background-color: transparent;
+  border: none;
+  color: ${({ theme }) => theme.text};
+  transition: transform 0.5s;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2)
+  }
+`
+
+const InputSearch = styled.input`
+  width: 300px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  outline: none;
+  color: ${({ theme }) => theme.text};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.text};
+    font-size: 20px;
+  }
+`
+
+const Search = styled.div`
+  background-color: ${({ theme }) => theme.opacity};
+  padding: 15px;
+  margin: 34px 0;
+  display: flex;
+  border-radius: 8px;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);
+`
+
+const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 40px;
+`
+
 const Header = styled.header`
   display: flex;
   align-items: center;
@@ -219,8 +292,9 @@ const PokemonItem = styled.li`
   margin: 10px;
   padding: 20px;
   background-color: ${({ theme }) => theme.opacity};
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  transition: transform 0.5s;
   
   &:hover {
     background: ${({ types }) => {
@@ -230,6 +304,7 @@ const PokemonItem = styled.li`
         : colors[0];
     }};
     color: #fff;
+    transform: scale(1.05);
   }
 `
 
@@ -240,6 +315,7 @@ const ImagePokemon = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   margin: 10px;
+  transition: transform 0.5s;
   
   &:hover {
     transform: scale(1.05);
@@ -261,6 +337,7 @@ const LoadMoreButton = styled.button`
   font-size: 20px;
   font-weight: 700;
   margin: 50px;
+  transition: transform 0.5s;
 
   &:hover {
     cursor: pointer;
