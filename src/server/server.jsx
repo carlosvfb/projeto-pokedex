@@ -9,8 +9,6 @@ export const fetchPokemonData = async (offset = 0, limit = 10) => {
             const pokemonDetails = await axios.get(pokemon.url);
             const types = pokemonDetails.data.types.map(type => type.type.name);
 
-            console.log(pokemonDetails)
-
             return {
                 name: pokemonDetails.data.name,
                 url: pokemonDetails.data.sprites.other.dream_world.front_default,

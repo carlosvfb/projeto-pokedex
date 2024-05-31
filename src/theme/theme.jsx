@@ -28,7 +28,7 @@ const darkTheme = {
   background: '#999',
   colorType: '#a6aec1',
   colorMovements: 'rgba(255, 255, 255, 0.5)',
-  urlImage: 'url(../../teste.jpg)',
+  urlImage: 'url(https://wallpapercave.com/wp/wp2828048.jpg)',
   opacityTransparent: 'rgba(0, 0, 0, 0.7)',
   backgroundMoviments: 'rgba(255, 255, 255, 0.5)',
   colorBack: '#FFF',
