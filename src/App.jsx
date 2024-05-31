@@ -229,6 +229,13 @@ const LoadMoreButton = styled.button`
   font-size: 20px;
   font-weight: 700;
   margin: 50px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colorMovements};
+    color: ${({ theme }) => theme.toggleBorder};
+    transform: scale(1.05);
+  }
   `
 
   const Container = styled.div`
