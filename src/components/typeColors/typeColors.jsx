@@ -19,4 +19,6 @@ const typeColors = {
     fairy: '#EE99AC',
 };
 
-export default typeColors;
+
+
+export default typeColors ;

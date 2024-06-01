@@ -55,7 +55,7 @@ const PokemonDetail = () => {
             </IformationPokemon>
             <ComplementPokemon>
                 <Movimentos>
-                    <h2>Movimentos:</h2>
+                    <h2>Moves:</h2>
                 <ListaDeMovimentos>
                     {pokemon.moves.slice(0, limiteMovimentos).map((move, index) => (
                         <MovimentosItem key={index}>{move}</MovimentosItem>
@@ -63,7 +63,7 @@ const PokemonDetail = () => {
                 </ListaDeMovimentos>
                 </Movimentos>
                 <Abylites>
-                    <h2>Habilidades:</h2>
+                    <h2>Abilitys:</h2>
                         <ul>
                             {pokemon.abilities.map((ability, index) => (
                                 <li key={index}>

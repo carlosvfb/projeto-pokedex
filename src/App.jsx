@@ -7,7 +7,12 @@ import { Routes, Route, Link } from 'react-router-dom';
 import PokemonDetail from "./routes/pokemonDetails";
 import logoPokemon from "/logo-pokemon.png";
 import typeColors from "./components/typeColors/typeColors";
-import { FiSearch } from 'react-icons/fi'
+import { FiSearch } from 'react-icons/fi';
+
+const allTypes = [
+  'Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting', 'Poison', 'Ground', 
+  'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dark', 'Dragon', 'Steel', 'Fairy'
+];
 
 function App() {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
@@ -20,6 +25,7 @@ function App() {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [pokemonName, setPokemonName] = useState('');
   const [searchError, setSearchError] = useState('');
+  const [selectedType, setSelectedType] = useState('');
   const limit = 10;
 
   const toggleDarkMode = (checked) => {
@@ -63,24 +69,39 @@ function App() {
     fetchAllData();
   }, []);
 
-  const handleInputChange = (event) => {
-    const value = event.target.value;
+  const handleInputChange = (e) => {
+    const value = e.target.value;
     setPokemonName(value);
-    if (value === '') {
-      setFilteredData(data);
-      setSearchError('');
-    } else {
-      const filtered = allPokemonData.filter(pokemon => pokemon.name.toLowerCase().includes(value.toLowerCase()));
-      if(filtered.length === 0) {
-        setSearchError('Pokémon não encontrado');
-      } else {
-        setSearchError('');
-        setFilteredData(filtered);
-      }
-      setFilteredData(filtered);
+    setSearchError('');
+    filterData(value, selectedType);
+  };
+
+  const handleTypeChange = (e) => {
+    const type = e.target.value;
+    setSelectedType(type);
+    filterData(pokemonName, type);
+  };
+
+  const filterData = (name, type) => {
+    let filtered = allPokemonData;
+
+    if (name) {
+      filtered = filtered.filter(pokemon => pokemon.name.toLowerCase().includes(name.toLowerCase()));
     }
 
+    if (type) {
+      filtered = filtered.filter(pokemon => pokemon.types.includes(type.toLowerCase()));
+    }
+
+    if (filtered.length === 0 && name) {
+      setSearchError('Pokémon não encontrado');
+    } else {
+      setSearchError('');
+    }
+
+    setFilteredData(filtered);
   };
+
 
   const handleSearch = () => {
     if (pokemonName === '') {
@@ -116,15 +137,26 @@ function App() {
       <GlobalStyle />
       <Header >
         <Link to="/"><ImageLogo src={logoPokemon} alt="logo" /></Link>
-        <Search>
-          <InputSearch
-          type="text"
-          value={pokemonName}
-          onChange={handleInputChange}
-          placeholder="Digite o nome do Pokémon"
-          />
-          <ButtonSearch onClick={handleSearch}><FiSearch size={25} /></ButtonSearch>
-        </Search>
+        <SearchPokemons>
+          <Search>
+            <InputSearch
+            type="text"
+            value={pokemonName}
+            onChange={handleInputChange}
+            placeholder="Enter the Pokémon's name"
+            />
+            <ButtonSearch onClick={handleSearch}><FiSearch size={25} /></ButtonSearch>
+          </Search>
+          <Select>
+          <label htmlFor="select-type">Select a type:</label>
+          <SelectFilter value={selectedType} onChange={handleTypeChange} id="select-type">
+          <option value="">All types</option>
+            {allTypes.map(type => (
+              <Option key={type} value={type.toLowerCase()} type={type.toLowerCase()}>{type}</Option>
+            ))}
+          </SelectFilter>
+          </Select>
+        </SearchPokemons>
         <DarkModeSwitch
           checked={isDarkMode}
           onChange={toggleDarkMode}
@@ -169,7 +201,7 @@ function App() {
                   </PokemonItem>
                 ))}
               </PokemonList>
-              {pokemonName === '' && data.length < 400 && (
+              {pokemonName === '' && selectedType === '' && data.length < 400 && (
                 <LoadMoreButton onClick={loadMorePokemon}>Carregar Mais Pokémons</LoadMoreButton>
               )}
             </>
@@ -182,10 +214,26 @@ function App() {
 }
 
 const GlobalStyle = createGlobalStyle`
-  * {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+
+  *::-webkit-scrollbar {
+	  width: 15px;
+  }
+
+  *::-webkit-scrollbar-track {
+	  background: ${({ theme }) => theme.toggleBorder};
+  }
+
+  *::-webkit-scrollbar-thumb {
+	  background-color: ${({ theme }) => theme.text};
+	  border-radius: 10px;
+	  border: 3px solid #1F252E;
   }
 
   ul {
@@ -218,6 +266,49 @@ const GlobalStyle = createGlobalStyle`
     z-index: -1;
   }
 `
+const SearchPokemons = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  max-width: 520px;
+`
+
+const Select = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  label {
+    font-size: 20px;
+    margin-bottom: 1px;
+    margin-left: -2px;
+  }
+`
+
+const SelectFilter = styled.select`
+  width: 150px;
+  background-color: ${({ theme }) => theme.opacity};
+  border: none;
+  font-size: 20px;
+  outline: none;
+  color: ${({ theme }) => theme.text};
+  margin-left: 15px;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5); 
+
+  `;
+
+const Option = styled.option`
+  background-color: ${({ theme }) => theme.opacity};
+  color: ${({ theme }) => theme.text};
+  /* padding: 10px; */
+  &:hover {
+    background-color: ${props => typeColors[props.type]};
+    color: white;
+  }
+`;
 
 const ButtonSearch = styled.button`
   background-color: transparent;
@@ -232,7 +323,7 @@ const ButtonSearch = styled.button`
 `
 
 const InputSearch = styled.input`
-  width: 300px;
+  width: 250px;
   height: 40px;
   background-color: transparent;
   border: none;
@@ -371,5 +462,6 @@ const TypeList = styled.div`
   font-size: 20px;
   font-weight: 700;
 `
+
 
 export default App;
