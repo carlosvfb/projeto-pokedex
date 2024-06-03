@@ -18,8 +18,6 @@ const lightTheme = {
   opacityType: 'rgba(255, 255, 255, 0.2)'
 };
 
-//https://i.pinimg.com/originals/81/cd/92/81cd92f234adcad21e753914951ada5a.jpg
-
 const darkTheme = {
   body: 'url(http://www.pixelstalk.net/wp-content/uploads/2016/06/Pictures-Pokemon-iPhone-Wallpaper.jpg)',
   opacity: 'rgba(0, 0, 0, 0.7)',

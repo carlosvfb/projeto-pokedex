@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchPokemonDetails } from '../server/server'; 
 import styled from 'styled-components';
 import { IoMdClose } from "react-icons/io";
-import typeColors from "../components/typeColors/typeColors"
+import typeColors from "../typeColors/typeColors"
 
 const PokemonDetail = () => {
     const { name } = useParams();
@@ -108,28 +108,32 @@ const TypePokemon = styled.div`
     font-size: 20px;
     font-weight: 700;
     
+    @media (max-width: 890px){
+        align-items: center;
+        margin-bottom: 20px;
+    }
 `
 
 const Button = styled.button`
     position: absolute;
-    top: 25px;
-    left: 25px;
+    top: 20px;
+    left: 20px;
     border: none;
     width: 46px;
-    font-size: 50px;
+    font-size: 45px;
     border-radius: 10px;
     text-align: center;
     height: 40px;
     background-color: ${({ theme }) => theme.opacityButton};
     color: ${({ theme }) => theme.colorBack};
-    
+    cursor: pointer;
 `;
 
 const ComplementPokemon = styled.div`
     background-color: ${({ theme }) => theme.opacityTransparent};
     padding: 10px;
     border-radius: 20px;
-    margin-top: 40px;
+    margin: 5px;
 `
 
 const IformationPokemon = styled.div`
@@ -138,7 +142,7 @@ const IformationPokemon = styled.div`
     align-items: center;
     gap: 20px;
     border: 2px silid ${({ theme }) => theme.text};
-    margin-top: 30px;
+    margin-top: 20px;
 
     div.border {
         background-color: ${({ theme }) => theme.opacity};
@@ -146,12 +150,20 @@ const IformationPokemon = styled.div`
         padding: 10px 50px;
         margin: 20px;
         border: 4px solid ${({ theme }) => theme.text};
+
+        @media (max-width: 400px){
+        margin-top: 40px;
+        }
     }
 
     h1 {
         font-size: 40px;
         font-weight: 700;
         color: ${({ theme }) => theme.text};
+
+        @media (max-width: 890px){
+            font-size: 30px;
+        }
     }
 `
 
@@ -176,11 +188,10 @@ const MovimentosItem = styled.li`
 const Pokemon = styled.div`
     display: flex;
     z-index: 1;
-    //890
+
     @media (max-width: 890px){
         flex-direction: column;
     }
-    
 `
 const ContainerDetail = styled.div`
     position: relative;
@@ -194,12 +205,24 @@ const ContainerDetail = styled.div`
     border-radius: 50px;
     padding: 30px;
     gap: 30px;
+    @media (max-width: 890px){
+        width: 93%;
+        padding: 26px;
+    }
+    @media (max-width: 400px){
+        padding: 15px;
+    }
+
 `
 const Abylites = styled.div`
     color: ${({ theme }) => theme.text};
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    @media (max-width: 890px){
+        align-items: center; 
+    }
 `
 
 export default PokemonDetail;
