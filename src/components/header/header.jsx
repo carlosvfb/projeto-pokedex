@@ -45,7 +45,7 @@ const StyledHeader = styled.header`
     /* padding: 10px 30px; */
     padding: 10px 20px;
     z-index: 2;
-    gap: 30px;
+    gap: 35px;
     
     @media (max-width: 902px){
         padding: 15px;
@@ -66,7 +66,6 @@ const ImageLogo = styled.img`
     width: 250px;
     height: 150px;
     cursor: pointer;
-
 `;
 
 export default Header;

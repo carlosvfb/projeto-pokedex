@@ -2,18 +2,25 @@ import styled from 'styled-components';
 import PokemonItem from '../pokemonItem/pokemonItem';
 import PropTypes from 'prop-types';
 
-const PokemonList = ({ filteredData, loadMorePokemon, dataLength, filtersActive }) => (
+const PokemonList = ({ filteredData, loadMorePokemon, dataLength, filtersActive, isLoadingMore }) => {
+    
+    const showLoadMoreButton = !filtersActive && dataLength < 400 && filteredData.length === dataLength;
+
+    return(
     <>
         <PokemonListContainer>
             {filteredData.map((item, index) => (
                 <PokemonItem key={`${item.name}-${index}`} item={item} />
             ))}
         </PokemonListContainer>
-        { !filtersActive && dataLength < 400 && (
-            <LoadMoreButton onClick={loadMorePokemon}>Load More</LoadMoreButton>
+        { showLoadMoreButton && (
+            <LoadMoreButton onClick={loadMorePokemon}>
+                {isLoadingMore ? 'Loading...' : 'Load More'}
+            </LoadMoreButton>
         )}
     </>
-);
+    )
+};
 
 PokemonList.propTypes = {
     filteredData: PropTypes.arrayOf(PropTypes.shape({
@@ -22,6 +29,7 @@ PokemonList.propTypes = {
     loadMorePokemon: PropTypes.func.isRequired,
     dataLength: PropTypes.number.isRequired,
     filtersActive: PropTypes.bool.isRequired,
+    isLoadingMore: PropTypes.bool.isRequired,
 };
 
 const PokemonListContainer = styled.ul`
