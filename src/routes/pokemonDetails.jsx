@@ -44,7 +44,7 @@ const PokemonDetail = () => {
                 <Button onClick={() => navigate('/')}><IoMdClose /></Button>
             <IformationPokemon>
                 <div className='border'>
-                <h1>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1).toLowerCase()}</h1>
+                    <h1>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1).toLowerCase()}</h1>
                 </div>
                 <img src={pokemon.url} alt={pokemon.name} />
                 <TypeList>
@@ -164,6 +164,11 @@ const IformationPokemon = styled.div`
         @media (max-width: 890px){
             font-size: 30px;
         }
+    }
+
+    img {
+        width: 250px;
+        height: 250px;
     }
 `
 
