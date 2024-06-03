@@ -174,6 +174,7 @@ const IformationPokemon = styled.div`
         font-size: 40px;
         font-weight: 700;
         color: ${({ theme }) => theme.text};
+        text-align: center;
 
         @media (max-width: 890px){
             font-size: 30px;

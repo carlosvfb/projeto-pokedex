@@ -75,7 +75,8 @@ const StyledLink = styled(Link)`
 const NamePokemon = styled.p`
     margin: 30px 0;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 700;
+    text-align: center;
 `;
 
 const TypeList = styled.div`
