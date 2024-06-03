@@ -48,7 +48,6 @@ const StyledHeader = styled.header`
     gap: 30px;
     
     @media (max-width: 902px){
-        gap: 0;
         padding: 15px;
         flex-wrap: wrap;
         .search-container {

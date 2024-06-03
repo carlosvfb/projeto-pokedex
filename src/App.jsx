@@ -6,6 +6,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from "./components/header/header";
 import PokemonList from "./components/pokemonsList/pokemonsList";
 import PokemonDetail from "./routes/pokemonDetails";
+import LoadingSpinner from "./components/loading/loadingSpinner";
 
 const App = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
@@ -102,7 +103,7 @@ const App = () => {
     if (pokemonName === '') {
       setFilteredData(data);
       setSearchError('');
-      alert("Digite um nome!");
+      alert("fill in the field with a pokemon name");
     } else {
       const filtered = allPokemonData.filter(pokemon => pokemon.name.toLowerCase().includes(pokemonName.toLowerCase()));
       if (filtered.length === 0) {
@@ -119,11 +120,11 @@ const App = () => {
   };
 
   if (loading && !initialLoadComplete) {
-    return <div>Carregando...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return <div>Erro ao buscar dados: {error.message}</div>;
+    return <div>Error fetching data: {error.message}</div>;
   }
 
   return (

@@ -4,6 +4,7 @@ import { fetchPokemonDetails } from '../server/server';
 import styled from 'styled-components';
 import { IoMdClose } from "react-icons/io";
 import typeColors from "../typeColors/typeColors"
+import LoadingSpinner from '../components/loading/loadingSpinner';
 
 const PokemonDetail = () => {
     const { name } = useParams();
@@ -17,7 +18,6 @@ const PokemonDetail = () => {
     const fetchData = async () => {
         try {
             const data = await fetchPokemonDetails(name);
-            console.log(data)
             setPokemon(data);
             setLoading(false);
         } catch (error) {
@@ -30,7 +30,11 @@ const PokemonDetail = () => {
 }, [name]);
 
     if (loading) {
-        return <div>Carregando...</div>;
+        return (
+            <LoadingContainer>
+                <LoadingSpinner />
+            </LoadingContainer>
+        );
     }
 
     if (error) {
@@ -80,6 +84,16 @@ const PokemonDetail = () => {
     </ContainerDetail>
     );
 };
+
+const LoadingContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.toggleBorder};
+`;
 
 const Movimentos = styled.div`
     color: ${({ theme }) => theme.text};
