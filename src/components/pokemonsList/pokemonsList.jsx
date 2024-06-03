@@ -10,7 +10,7 @@ const PokemonList = ({ filteredData, loadMorePokemon, dataLength, filtersActive 
             ))}
         </PokemonListContainer>
         { !filtersActive && dataLength < 400 && (
-            <LoadMoreButton onClick={loadMorePokemon}>Carregar Mais Pokémons</LoadMoreButton>
+            <LoadMoreButton onClick={loadMorePokemon}>Load More</LoadMoreButton>
         )}
     </>
 );
