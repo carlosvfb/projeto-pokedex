@@ -42,7 +42,6 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* padding: 10px 30px; */
     padding: 10px 20px;
     z-index: 2;
     gap: 35px;
@@ -66,6 +65,10 @@ const ImageLogo = styled.img`
     width: 250px;
     height: 150px;
     cursor: pointer;
+
+    @media (max-width: 375px){
+        width: 200px;
+    }
 `;
 
 export default Header;

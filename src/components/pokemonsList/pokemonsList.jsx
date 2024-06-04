@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PokemonItem from '../pokemonItem/pokemonItem';
 import PropTypes from 'prop-types';
 
-const PokemonList = ({ filteredData, loadMorePokemon, dataLength, filtersActive, isLoadingMore }) => {
+const PokemonList = ({ filteredData, loadMorePokemon, dataLength, filtersActive }) => {
     
     const showLoadMoreButton = !filtersActive && dataLength < 400 && filteredData.length === dataLength;
 
@@ -14,9 +14,7 @@ const PokemonList = ({ filteredData, loadMorePokemon, dataLength, filtersActive,
             ))}
         </PokemonListContainer>
         { showLoadMoreButton && (
-            <LoadMoreButton onClick={loadMorePokemon}>
-                {isLoadingMore ? 'Loading...' : 'Load More'}
-            </LoadMoreButton>
+            <LoadMoreButton onClick={loadMorePokemon}>Load More</LoadMoreButton>
         )}
     </>
     )
@@ -29,7 +27,6 @@ PokemonList.propTypes = {
     loadMorePokemon: PropTypes.func.isRequired,
     dataLength: PropTypes.number.isRequired,
     filtersActive: PropTypes.bool.isRequired,
-    isLoadingMore: PropTypes.bool.isRequired,
 };
 
 const PokemonListContainer = styled.ul`
