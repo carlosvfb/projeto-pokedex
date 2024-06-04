@@ -105,7 +105,7 @@ Contribuições são bem-vindas! Se você deseja contribuir, por favor, faça um
 
 Este projeto está licenciado sob a Licença MIT.
 
-## Agradecimentos
+## Tecnologias Essenciais para Desenvolvimento da aplicação
 
 - [PokéAPI](https://pokeapi.co/): A API de Pokémon usada para buscar dados dos Pokémon.
 - [React](https://reactjs.org/): A biblioteca usada para construir a interface de usuário.
@@ -233,7 +233,7 @@ We welcome contributions! If you'd like to contribute, please fork the repositor
 
 This project is licensed under the MIT License.
 
-## Acknowledgements
+## Essential technologies for application development
 
 - [PokéAPI](https://pokeapi.co/): The Pokémon API used to fetch Pokémon data.
 - [React](https://reactjs.org/): The library used for building the user interface.
