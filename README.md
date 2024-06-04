@@ -30,7 +30,7 @@ Para começar com o Aplicativo Pokémon, siga estas etapas:
 
 1. **Clone o repositório:**
     ```bash
-    git clone https://github.com/carlosvfb/pokemon-app.git
+    git clone https://github.com/carlosvfb/pokemon-app.git](https://github.com/carlosvfb/projeto-pokedex.git
     cd pokemon-app
     ```
 
@@ -156,7 +156,7 @@ To get started with the Pokémon App, follow these steps:
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/carlosvfb/pokemon-app.git
+    git clone https://github.com/carlosvfb/pokemon-app.git](https://github.com/carlosvfb/projeto-pokedex.git
 
     cd pokemon-app
     ```
