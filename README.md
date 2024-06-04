@@ -111,9 +111,15 @@ Este projeto está licenciado sob a Licença MIT.
 - [React](https://reactjs.org/): A biblioteca usada para construir a interface de usuário.
 - [Styled-components](https://styled-components.com/): Para estilização da aplicação.
 
----
+## Autor
 
-Obrigado por usar o Aplicativo Pokémon! Se você tiver alguma dúvida ou feedback, sinta-se à vontade para abrir uma issue ou nos contatar.
+Linkedin - [Carlos Vítor Faria Barboza](https://www.linkedin.com/in/carlos-barboza-080842218)
+
+instagram - [carlos_vfb.dev](https://www.instagram.com/carlos_vfb.dev)
+
+## Agradecimentos
+
+Obrigado por usar o Aplicativo Pokémon! Se você tiver alguma dúvida ou feedback, sinta-se à vontade para abrir uma issue ou me chamar nas redes sociais.
 
 Feliz caça aos Pokémon!
 
@@ -233,8 +239,14 @@ This project is licensed under the MIT License.
 - [React](https://reactjs.org/): The library used for building the user interface.
 - [Styled-components](https://styled-components.com/): For styling the application.
 
----
+## Author
 
-Thank you for using the Pokémon App! If you have any questions or feedback, feel free to open an issue or contact us.
+LinkedIn - [Carlos Vítor Faria Barboza](https://www.linkedin.com/in/carlos-barboza-080842218)
 
-Happy Pokémons hunting!
+Instagram - [carlos_vfb.dev](https://www.instagram.com/carlos_vfb.dev)
+
+## Acknowledgements
+
+Thank you for using the Pokémon App! If you have any questions or feedback, feel free to open an issue or reach out to me on social media.
+
+Happy Pokémon hunting!
