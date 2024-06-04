@@ -101,10 +101,6 @@ Contribuições são bem-vindas! Se você deseja contribuir, por favor, faça um
     ```
 5. **Crie um novo Pull Request**
 
-## Licença
-
-Este projeto está licenciado sob a Licença MIT.
-
 ## Tecnologias Essenciais para Desenvolvimento da aplicação
 
 - [PokéAPI](https://pokeapi.co/): A API de Pokémon usada para buscar dados dos Pokémon.
@@ -228,10 +224,6 @@ We welcome contributions! If you'd like to contribute, please fork the repositor
     git push origin feature-name
     ```
 5. **Create a new Pull Request**
-
-## License
-
-This project is licensed under the MIT License.
 
 ## Essential technologies for application development
 
