@@ -64,7 +64,7 @@ export const fetchPokemonDetails = async (name) => {
 
 export const fetchAllPokemonData = async () => {
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=648`); // Ajuste o limite conforme necessário
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=648`);
         const pokemonList = response.data.results;
         console.log(pokemonList);
         const detailedDataPromises = pokemonList.map(async (pokemon) => {
@@ -86,27 +86,3 @@ export const fetchAllPokemonData = async () => {
         throw error;
     }
 };
-
-
-// export const fetchPokemonDetails = async (name) => {
-//     try {
-//         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
-//         const pokemonDetails = response.data;
-//         console.log(pokemonDetails)
-//         const types = pokemonDetails.types.map(type => type.type.name);
-
-//         return {
-//             name: pokemonDetails.name,
-//             url: pokemonDetails.sprites.other.dream_world.front_default,
-//             types: types,
-//             height: pokemonDetails.height,
-//             weight: pokemonDetails.weight,
-//             abilities: pokemonDetails.abilities.map(ability => ability.ability.name),
-//             moves: pokemonDetails.moves.map(move => move.move.name),
-//             stats: pokemonDetails.stats.map(stat => stat.stat.name),
-//         };
-//     } catch (error) {
-//         console.error('Erro ao buscar dados do Pokémon: ', error);
-//         throw error;
-//     }
-// };
